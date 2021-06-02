@@ -1,0 +1,317 @@
+html, body{
+  height: 100%;
+}
+
+
+#main-wrapper, footer {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+
+header{
+  position: relative;
+  overflow: hidden;
+  height: 60px;
+  z-index: 10;
+  color: white;
+  background: #374f40;
+  border-bottom: 5px solid #456454;
+  box-shadow: 0 1px 1px black;
+}
+
+header h1{
+  height: 39px;
+  margin: 8px 10px 10px;
+  font-size: 32px;
+  color: #3ed08c;
+}
+
+.logo{
+  height: 100%;
+  width: auto;
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+footer{
+  bottom: 0;
+  height: 22px;
+  z-index: 10;
+
+  color: #C9E3CC;
+  background: #456454;
+
+  font-size: 12px;
+  padding: 3px 5px;
+}
+
+#main-wrapper{
+  top: 60px;
+  bottom: 22px;
+}
+
+
+
+#top-panels{
+  min-height: 125px;
+}
+
+#nav-panel{
+  min-width: 250px
+}
+
+.graph-container{
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.graph-container:hover{
+  overflow-y: auto;
+}
+
+#graph{
+  height: 100%;
+  min-height: 400px;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#data-nav{
+  padding: 10px 15px 0;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+
+.btn-container{
+  border-top: 1px solid #e5e5e5;
+  padding-top: 10px;
+}
+
+.btn-container .btn{
+  margin-bottom: 7px
+}
+
+.btn-download {
+  color: #fff;
+  background-color: #368636;
+  border-color: #337933;
+}
+
+.btn-download:focus, .btn-download.focus {
+  color: #fff;
+  background-color: #276227;
+  border-color: #173617;
+}
+
+.btn-download:hover {
+  color: #fff;
+  background-color: #276227;
+  border-color: #1e481e;
+}
+
+.btn-download:active .btn-download.active{
+  color: #fff;
+  background-color: #276227;
+  border-color: #1e481e;
+}
+
+.main-types label{
+  font-weight: bold;
+}
+
+
+.checkbox-inline+.checkbox-inline, .radio-inline+.radio-inline {
+  margin-left: 0;
+}
+
+.checkbox-inline, .radio-inline {
+  margin-right: 10px;
+}
+
+
+.no-data-message {
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  width: 100%;
+  transform: translate(0, -50%);  
+  text-align: center;
+  color: #565;  
+  font-size: 2vw;
+}
+
+.no-data #grid, .no-data #graph{
+  visibility: hidden;
+}
+
+.no-data .no-data-message{
+  display: block;
+}
+
+
+
+
+#month option{
+  color: #000;
+  background-color: #fff;
+}
+
+#month option[disabled], .no-data #month{
+  background-color: #ccc;
+}
+
+
+
+table{
+  table-layout: fixed;
+  font-size: 14px;
+  line-height: 20px;
+  border-spacing: 0;
+  border-collapse: separate;
+  background: #fff;
+}
+
+thead tr{
+  /* border-bottom: 2px solid #000; */
+}
+
+td, th{
+  text-align: center;
+  border-right: 1px solid #ccc;
+  padding: 3px 6px;
+  min-width: 60px;
+}
+
+thead th{
+  font-weight: bold;
+  padding: 5px 8px 4px;
+  /*border-bottom: 2px solid #333;*/
+  background: #FFFFFF;
+  background-clip: padding-box;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+}
+
+
+table thead th::after {
+    border-bottom: 2px solid #333;
+    position: absolute;
+    bottom: 0px;
+    right: -1px;
+    left: -1px;
+    content: "";
+}
+
+
+thead th:first-child, tbody td:first-child {
+  font-weight: bold;
+  text-align: left;
+  border-right: 2px solid #333;
+}
+
+
+
+tbody tr:nth-child(odd) {background: #eee}
+tbody tr:hover {
+  background: lightgreen;
+}
+
+table tr {
+  height: 28px
+}
+
+
+
+
+.progress-bar {
+  transition: width 0.4s linear, box-shadow 0.3s ease-out 0.4s;
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  box-shadow: inset 0 -2px 0 #2fda2c;
+}
+.progress-bar[data-state=growing] {
+  transition: width 40s cubic-bezier(0.02, 1, 0.02, 0.95);
+  width: 99%;
+}
+.progress-bar[data-state="100"] {
+  box-shadow: inset 0 0 0 #2fda2c;
+  width: 100%;
+}
+.progress-bar[data-state="0"] {
+  box-shadow: inset 0 0 0 #2fda2c;
+  width: 0;
+}
+.progress-bar[data-state=reset] {
+  transition: none;
+  width: 0;
+}
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media only screen and (max-width: 768px) {
+
+  .rsz-loaded #main-wrapper, .rsz-loaded footer{
+    position: static;
+  }
+
+  html, body, #main-wrapper{
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  header {
+    height: auto;
+  }
+
+  header h1{
+    font-size: 25px;
+    height: 30px;
+  }
+
+  .logo{
+    height: 30px;
+  }
+
+  #grid-panel{
+    height: 350px;
+    margin: 1px;
+  }
+
+  .form-group:last-child {
+    margin-bottom: 15px;
+  }
+
+  .no-data-message {
+    font-size: 4vw;
+  }
+
+}
+
+@media only screen and (max-width: 480px) {
+  header h1{
+    font-size: 18px;
+    line-height: 2em;
+  }
+
+}
