@@ -1,15 +1,22 @@
 module.exports = function(grunt) {
-    "use strict";
+	"use strict";
 
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+	const metaBanner =  '/**\n' +
+						' * Greeno WepApp - v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+						' *\n' +
+						' * Copyright (c) 2016 - <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+						' * Licensed under the <%= pkg.license %> license.\n' +
+						' */\n';
+
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		clean: {
 			dist: ['dist']
 		},
 		concat: {
 			dist: {
 				options:{
-					banner: "(function(){\r\n\"use strict\";",
+					banner: "(function(){\n\"use strict\";",
 					footer: "\n})();",
 					process: function(src, filepath) {
 					  return '// Source: ' + filepath + '\n' +
@@ -32,7 +39,7 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				options: {
-					banner: '/*! <%= pkg.name %> - <%= pkg.version %> - <%= pkg.author %> */',
+					banner: metaBanner,
 					mangle: {
 						properties: {
 							regex: /(elm|panels|store|getSize|getMinSize|getMaxSize|getHandleSize)/
@@ -56,44 +63,44 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-        copy: {
-            dist: {
-                files: [{
+		copy: {
+			dist: {
+				files: [{
 					expand: true,
-                    src: ['**/*', '.*', '!**/assets/**'],
+					src: ['**/*', '.*', '!**/assets/**'],
 					cwd: 'src/',
-                    dest: 'dist/'
-                },{
+					dest: 'dist/'
+				},{
 					expand: true,
-                    src: ['**'],
+					src: ['**'],
 					cwd: 'src/assets/img/',
-                    dest: 'dist/assets/'
-                },{
+					dest: 'dist/assets/'
+				},{
 					expand: true,
-                    src: ['**'],
+					src: ['**'],
 					cwd: 'src/assets/js/libs/',
-                    dest: 'dist/assets/'
-                }]
-            }
-        },
+					dest: 'dist/assets/'
+				}]
+			}
+		},
 		replace: {
-            dist: {
-                options: {
-                    patterns: [
-                        {
-                            match: /(?<="assets\/(?:script|style)\.v)[0-9\.]+(?=\.(?:js|css)")/g,
-                            replacement: '<%= pkg.version %>'
-                        }
-                    ],
-                    usePrefix: false,
-                },
-                files: [{
-                    expand: true,
-                    src: ['src/index.php']
-                }]
-            }
-        }
-    });
+			dist: {
+				options: {
+					patterns: [
+						{
+							match: /(?<="assets\/(?:script|style)\.v)[0-9\.]+(?=\.(?:js|css)")/g,
+							replacement: '<%= pkg.version %>'
+						}
+					],
+					usePrefix: false,
+				},
+				files: [{
+					expand: true,
+					src: ['src/index.php']
+				}]
+			}
+		}
+	});
 
 
 	grunt.loadNpmTasks('grunt-replace');

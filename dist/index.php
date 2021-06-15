@@ -54,7 +54,7 @@
 
 		<!-- STYLES -->
 		<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-		<link rel="stylesheet" type="text/css" href="assets/style.v27.css" >
+		<link rel="stylesheet" type="text/css" href="assets/style.v1.27.0.css" >
 
 		<link rel="shortcut icon" type="image/png" sizes="192x192" href="assets/android-icon-192x192.png">
 		<link rel="shortcut icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -64,7 +64,7 @@
 		<!-- SCRIPTS -->
 		<script src="assets/plotly-basic-1.52.2.fixed.min.js" crossorigin defer></script>
 		<script src="https://cdn.plot.ly/plotly-locale-it-1.52.2.js" crossorigin defer></script>
-		<script src="assets/script.v27.js" crossorigin defer></script>
+		<script src="assets/script.v1.27.0.js" crossorigin defer></script>
 		<script type="application/json" id="data-lists"><?php echo $jsonAllAvailableData; ?></script>
 	</head>
 	<body>

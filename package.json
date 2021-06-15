@@ -1,8 +1,8 @@
 {
   "name": "greeno-webapp",
-  "version": "27",
+  "version": "1.27.0",
   "description": "Visualizzatore dati web per Greeno Project",
-  "main": "Gruntfile.js",
+  "main": "dist/index.php",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^1.4.1",
@@ -16,6 +16,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Giovanni Mastrangelo",
-  "license": "ISC"
+  "author": {
+	  "name": "Giovanni Mastrangelo"
+  },
+  "license": "CC-BY-NC-ND-4.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gio-mast/greeno-webapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gio-mast/greeno-webapp/issues"
+  },
+  "homepage": "https://github.com/gio-mast/greeno-webapp#readme",
+  "keywords": [
+    "wsn",
+    "iot",
+    "bigdata"
+  ]
 }
