@@ -57,6 +57,8 @@ class ParsedData {
 	const TYPE_GATEWAY_DATA = 0x10;
 	const TYPE_TEMP_HUM     = 0x20;
 
+	const GATEWAY_ADDRESS   = 0x01;
+
 	const FmtRecordHeader   = 'N1timestamp/x1/C1saveData/n1dataLength';
 	const FmtNodeDataHeader = 'C1address/C1status/C1length';
 
@@ -171,13 +173,26 @@ class ParsedData {
 
 				$nodeHeader = unpack(self::FmtNodeDataHeader, $buf);
 
-				$curAddress  = $nodeHeader['address'];
+				$curAddress = $nodeHeader['address'];
 
 
 				// --- Read Node Payload ---
 				$val = NULL;
-				if($nodeHeader['length'] > 0) {
-					$buf = fread($handle,$nodeHeader['length']);
+
+				if($request->type == 'failures') {
+					if($curAddress != self::GATEWAY_ADDRESS) {
+						$val = Mote::GetFailures($nodeHeader);
+					}
+					fseek($handle, $nodeHeader['length'], SEEK_CUR);
+				}
+				else if ($request->type == 'power') {
+					if($curAddress != self::GATEWAY_ADDRESS) {
+						$val = Mote::GetPower($nodeHeader);
+					}
+					fseek($handle, $nodeHeader['length'], SEEK_CUR);
+				}
+				else if($nodeHeader['length'] > 0) {
+					$buf = fread($handle, $nodeHeader['length']);
 
 					$type = unpack('C1', $buf);
 
@@ -188,19 +203,8 @@ class ParsedData {
 							break;
 
 						case self::TYPE_TEMP_HUM:
-
 							$mote = isset($nodeList[$curAddress])? $nodeList[$curAddress] : $nodeList['default'];
-
-							if($request->type == 'failures') {
-								$val = $mote->GetFailures($nodeHeader);
-							}
-							else if ($request->type == 'power') {
-								$val = $mote->GetPower($nodeHeader);
-							}
-							else {
-								$val = $mote->getValue($buf, $request->type, $request->raw, $recHeader['saveData']);								
-							}
-
+							$val = $mote->getValue($buf, $request->type, $request->raw, $recHeader['saveData']);
 							break;
 
 						default:
