@@ -5,7 +5,7 @@ Questa applicazione web consente di visualizzare i dati raccolti dai sensori del
 ## Requisiti
 
 * Webserver Apache 2.4+
-* PHP 5.4.x - 7.4.x
+* PHP 5.4.x - 8.x
 * Compatibilità con IE11+ e tutti i browser moderni 
 
 ## Installazione

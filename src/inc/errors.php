@@ -49,8 +49,6 @@ function exception_log($e, $context='')
 //       this custom error handler, and therefore will not be converted into ErrorExceptions.
 //       See: https://www.php.net/manual/en/function.set-error-handler.php 
 
-
-
 function error_exception_handler($errno, $errstr, $errfile, $errline)
 {
 	// Ignore @error-control operator
@@ -60,8 +58,10 @@ function error_exception_handler($errno, $errstr, $errfile, $errline)
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 
-
-set_error_handler("error_exception_handler");
+if(version_compare(phpversion(), "8.0.0.", "<"))
+{
+	set_error_handler("error_exception_handler");
+}
 
 ini_set('display_errors', 0);
 

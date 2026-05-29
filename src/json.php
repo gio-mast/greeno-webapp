@@ -25,7 +25,7 @@ class App {
 			}
 
 			// ---- Send the list of the available data file ----
-			if(strcasecmp(filter_input(INPUT_GET, 'list', FILTER_SANITIZE_STRING), 'all')==0)
+			if(strcasecmp((string)filter_input(INPUT_GET, 'list'), 'all')==0)
 			{
 				JsonResponse::Send(DataFile::GetAllAvailable());
 				return;

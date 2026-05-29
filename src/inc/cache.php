@@ -45,50 +45,53 @@ class CacheEntry
 		$retObj->path = $cachefile;
 
 		// Open an existing cache file
-		$handle = @fopen($cachefile, 'r+');
-		if($handle !== FALSE)
+		if(file_exists($cachefile))
 		{
-			$retObj->fHandle = $handle;
-			$ReadVersion = "";
-			
-			try {
-				// Gain exclusive lock on the file so other request won't interfere
-				if(flock($retObj->fHandle, LOCK_EX) == FALSE)
-				{
-					throw new Exception("Cannot gain exclusive lock on reading ".$cachefile);
-				};
-
-				$sHeader = fgets($handle);
-				if($sHeader === FALSE){
-					throw new Exception("Cannot read cache entry header in ".$cachefile);
-				}
-
-				$header = explode(',', trim($sHeader));
-				if(count($header) !== 4){
-					throw new Exception("Invalid cache entry header found in ".$cachefile);
-				}
-
-				$ReadVersion = $header[0];
-				$retObj->lastModified = intval($header[1]);
-				$retObj->parserOffset = intval($header[2]);
-				$retObj->addressList  = explode('|', $header[3]);
-			
-				$retObj->dataPos = ftell($handle);
-				$retObj->fresh = ($retObj->lastModified == $request->getDataFile()->getLastModified());
-			}
-			catch (Exception $e)
+			$handle = fopen($cachefile, 'r+');
+			if($handle !== FALSE)
 			{
-				//Any invalid file will be close and then overwitten (see below)
-				$retObj->close();
-				exception_log($e, __METHOD__);
-			}
+				$retObj->fHandle = $handle;
+				$ReadVersion = "";
+				
+				try {
+					// Gain exclusive lock on the file so other request won't interfere
+					if(flock($retObj->fHandle, LOCK_EX) == FALSE)
+					{
+						throw new Exception("Cannot gain exclusive lock on reading ".$cachefile);
+					};
 
-			// Check if api versions match, otherwise close and overwrite the file
-			if($ReadVersion === APP_VERSION) {
-				return $retObj;
-			}
-			else {
-				$retObj->close();
+					$sHeader = fgets($handle);
+					if($sHeader === FALSE){
+						throw new Exception("Cannot read cache entry header in ".$cachefile);
+					}
+
+					$header = explode(',', trim($sHeader));
+					if(count($header) !== 4){
+						throw new Exception("Invalid cache entry header found in ".$cachefile);
+					}
+
+					$ReadVersion = $header[0];
+					$retObj->lastModified = intval($header[1]);
+					$retObj->parserOffset = intval($header[2]);
+					$retObj->addressList  = explode('|', $header[3]);
+				
+					$retObj->dataPos = ftell($handle);
+					$retObj->fresh = ($retObj->lastModified == $request->getDataFile()->getLastModified());
+				}
+				catch (Exception $e)
+				{
+					//Any invalid file will be close and then overwitten (see below)
+					$retObj->close();
+					exception_log($e, __METHOD__);
+				}
+
+				// Check if api versions match, otherwise close and overwrite the file
+				if($ReadVersion === APP_VERSION) {
+					return $retObj;
+				}
+				else {
+					$retObj->close();
+				}
 			}
 		}
 
@@ -179,7 +182,7 @@ class CacheEntry
 	}
 
 
-	private final function getData()
+	private function getData()
 	{
 		// Validate cached response
 		if($this->parserOffset <= 0)
@@ -283,7 +286,7 @@ class CacheEntry
 
 	public final function close()
 	{
-		if(!isset($this->fHandle))
+		if(isset($this->fHandle))
 		{
 			@flock($this->fHandle, LOCK_UN);
 			@fclose($this->fHandle);
